@@ -12,7 +12,6 @@
         (placed ?g - goat)
         (goatMove)
         (goatWon)
-        (blockedTiger ?t - tiger)
         (occupied ?l - location)
     )
 
@@ -44,6 +43,7 @@
             (not (taken ?g))
             (connected ?from ?to)
             (not (occupied ?to))
+            (goatMove)
         )
         :effect (and
             (atlocation ?g ?to)
@@ -62,7 +62,6 @@
             (not (goatMove))
         )
         :effect (and
-            ;;(when (blockedTiger ?t) (not (blockedTiger ?t)) )
             (not (atlocation ?t ?from))
             (not (occupied ?from))
             (atlocation ?t ?to)
@@ -90,17 +89,15 @@
                 (not (occupied ?middle))
                 (taken ?goat)
                 (not (placed ?goat))
-                ;;(when (blockedTiger ?t) (not (blockedTiger ?t)))
                 (goatMove)
           )
     )
 
-    (:action block-Tiger
-     :parameters (?tiger - tiger)
+    (:action block-Tigers
      :precondition
      (and
-       (not (blockedTiger ?tiger))
-       (exists (?blocked - location)
+       (forall (?tiger - tiger)
+         (exists (?blocked - location)
              (and  (atlocation ?tiger ?blocked)
                     (forall (?dest - location ?middle - location)
                              (imply (or (connected ?blocked ?dest)
@@ -109,23 +106,8 @@
                     )
              )
         )
+        )
       )
-      :effect (blockedTiger ?tiger)
-    )
-
-    (:action unblock-Tiger
-     :parameters (?tiger - tiger)
-     :precondition
-     (and
-      (blockedTiger ?tiger)
-      (exists (?unblocked - location ?dest - location ?middle - location)
-            (and  (atlocation ?tiger ?unblocked)
-                  (or (connected ?unblocked ?dest)
-                      (jumpable ?unblocked ?middle ?dest))
-                  (not (occupied ?dest))
-             )
-       )
-     )
-     :effect (not (blockedTiger ?tiger))
+      :effect (goatWon)
     )
 )

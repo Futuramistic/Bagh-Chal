@@ -10,6 +10,8 @@
   (:init
     (goatMove)
     (occupied location9)
+    (occupied location1)
+    (atlocation tiger2 location1)
     (atlocation tiger1 location9)
 
     (jumpable location1 location2 location3)
@@ -71,6 +73,11 @@
   ; The goal state describe what we desire to achieve
 
   (:goal
-    (blockedTiger tiger1)
+    (and
+    (taken goat1)
+    (taken goat2)
+    (taken goat3)
+    (taken goat4)
+    (taken goat5))
   )
 )
