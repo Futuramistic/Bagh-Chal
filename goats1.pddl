@@ -9,6 +9,7 @@
 
   (:init
     (goatMove)
+    (occupied location9)
     (atlocation tiger1 location9)
 
     (jumpable location1 location2 location3)
