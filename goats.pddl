@@ -1,6 +1,6 @@
 ﻿(define (domain goats)
 
-    (:requirements :adl :typing :existential-preconditions :conditional-effects :universal-preconditions)
+    (:requirements :adl :typing :existential-preconditions :conditional-effects :universal-preconditions :fluents)
     (:types pawn - object
             goat tiger - pawn
             location)
@@ -12,7 +12,12 @@
         (placed ?g - goat)
         (goatMove)
         (goatWon)
+        (tigerWon)
         (occupied ?l - location)
+    )
+
+    (:functions
+      (numberOfTakenGoats)
     )
 
     (:action place
@@ -90,12 +95,14 @@
                 (taken ?goat)
                 (not (placed ?goat))
                 (goatMove)
+                (increase (numberOfTakenGoats) 1)
           )
     )
 
-    (:action block-Tigers
+    (:action Win-goats
      :precondition
      (and
+       (not (tigerWon))
        (forall (?tiger - tiger)
          (exists (?blocked - location)
              (and  (atlocation ?tiger ?blocked)
@@ -109,5 +116,14 @@
         )
       )
       :effect (goatWon)
+    )
+
+    (:action Win-tigers
+     :precondition
+     (and
+       (not (goatWon))
+       (= (numberOfTakenGoats) 5)
+      )
+      :effect (tigerWon)
     )
 )

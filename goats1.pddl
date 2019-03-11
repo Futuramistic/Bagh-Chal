@@ -9,6 +9,7 @@
 
   (:init
     (goatMove)
+    (= (numberOfTakenGoats) 0)
     (occupied location9)
     (occupied location1)
     (atlocation tiger2 location1)
@@ -73,11 +74,8 @@
   ; The goal state describe what we desire to achieve
 
   (:goal
-    (and
-    (taken goat1)
-    (taken goat2)
-    (taken goat3)
-    (taken goat4)
-    (taken goat5))
+    (and (tigerWon)
+    (goatWon))
   )
+  (:metric minimize (numberOfTakenGoats))
 )
