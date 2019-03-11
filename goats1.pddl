@@ -10,6 +10,7 @@
   (:init
     (goatMove)
     (= (numberOfTakenGoats) 0)
+    
     (occupied location9)
     (occupied location1)
     (atlocation tiger2 location1)
@@ -24,16 +25,6 @@
     (jumpable location3 location6 location9)
     (jumpable location7 location8 location9)
 
-    (jumpable location3 location2 location1)
-    (jumpable location7 location4 location1)
-    (jumpable location9 location5 location1)
-    (jumpable location8 location5 location2)
-    (jumpable location7 location5 location3)
-    (jumpable location6 location5 location4)
-    (jumpable location9 location6 location3)
-    (jumpable location9 location8 location7)
-
-
     (connected location1 location4)
     (connected location4 location7)
     (connected location7 location8)
@@ -43,15 +34,6 @@
     (connected location3 location2)
     (connected location2 location1)
 
-    (connected location4 location1)
-    (connected location7 location4)
-    (connected location8 location7)
-    (connected location9 location8)
-    (connected location6 location9)
-    (connected location3 location6)
-    (connected location2 location3)
-    (connected location1 location2)
-
     (connected location1 location5)
     (connected location3 location5)
     (connected location2 location5)
@@ -60,22 +42,9 @@
     (connected location7 location5)
     (connected location8 location5)
     (connected location9 location5)
-
-    (connected location5 location1)
-    (connected location5 location3)
-    (connected location5 location2)
-    (connected location5 location4)
-    (connected location5 location6)
-    (connected location5 location7)
-    (connected location5 location8)
-    (connected location5 location9)
   )
-
-  ; The goal state describe what we desire to achieve
-
   (:goal
-    (and (tigerWon)
-    (goatWon))
+    (goatWon)
   )
   (:metric minimize (numberOfTakenGoats))
 )

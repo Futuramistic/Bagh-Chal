@@ -1,19 +1,23 @@
 ﻿(define (domain goats)
 
-    (:requirements :adl :typing :existential-preconditions :conditional-effects :universal-preconditions :fluents)
+    (:requirements :adl)
     (:types pawn - object
             goat tiger - pawn
             location)
     (:predicates
-        (atlocation ?g - pawn ?l - location)
+
+        (occupied ?l - location)
         (connected ?l - location ?n - location)
         (jumpable ?from - location ?throught - location ?to - location)
+
+        (atlocation ?g - pawn ?l - location)
         (taken ?g - goat)
         (placed ?g - goat)
-        (goatMove)
+
         (goatWon)
         (tigerWon)
-        (occupied ?l - location)
+        (goatMove)
+
     )
 
     (:functions
@@ -46,7 +50,10 @@
             )
             (atlocation ?g ?from)
             (not (taken ?g))
-            (connected ?from ?to)
+            (or
+                (connected ?from ?to)
+                (connected ?to ?from)
+            )
             (not (occupied ?to))
             (goatMove)
         )
@@ -62,7 +69,10 @@
         :parameters (?t - tiger ?from - location ?to - location)
         :precondition (and
             (atlocation ?t ?from)
-            (connected ?from ?to)
+            (or
+                (connected ?from ?to)
+                (connected ?to ?from)
+            )
             (not (occupied ?to))
             (not (goatMove))
         )
@@ -82,7 +92,8 @@
             (atlocation ?t ?from)
             (not (occupied ?to))
             (atlocation ?goat ?middle)
-            (jumpable ?from ?middle ?to)
+            (or (jumpable ?from ?middle ?to)
+                (jumpable ?to ?middle ?from))
             (not (goatMove))
         )
         :effect (and
@@ -108,7 +119,10 @@
              (and  (atlocation ?tiger ?blocked)
                     (forall (?dest - location ?middle - location)
                              (imply (or (connected ?blocked ?dest)
-                                        (jumpable ?blocked ?middle ?dest))
+                                        (connected ?dest ?blocked)
+                                        (jumpable ?blocked ?middle ?dest)
+                                        (jumpable ?dest ?middle ?blocked)
+                                        )
                                     (occupied ?dest))
                     )
              )
@@ -122,7 +136,7 @@
      :precondition
      (and
        (not (goatWon))
-       (= (numberOfTakenGoats) 5)
+       (>= (numberOfTakenGoats) 5)
       )
       :effect (tigerWon)
     )
