@@ -9,8 +9,9 @@
 
   (:init
     (goatMove)
+    (= (numberOfMoves) 0)
     (= (numberOfTakenGoats) 0)
-    
+
     (occupied location9)
     (occupied location1)
     (atlocation tiger2 location1)
@@ -44,7 +45,7 @@
     (connected location9 location5)
   )
   (:goal
-    (goatWon)
+      (goatWon)
   )
   (:metric minimize (numberOfTakenGoats))
 )
