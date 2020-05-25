@@ -30,3 +30,6 @@ placed on the board during the initial setup. “The Goat” moves first.
 |Goal for tigers|Goal for goats|
 | ------------- | ------------- |
 |Capture five goats|All tigers are blocked from being able to move|
+
+## Results
+<a href="https://github.com/Futuramistic/Bagh-Chal/blob/master/Results.pdf">Results</a>
